@@ -1,6 +1,7 @@
 export default function(options) {
     return {
         templates: state => state.templates,
+        defaultTemplates: state => state.defaultTemplates,
         preferences: state => state.preferences,
         // Get only active preferences ie the entities in the schema
         strippedPreferences: state => state.schema.reduce((carry, entity) => {

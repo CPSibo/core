@@ -25,6 +25,7 @@ export const Globals = {
 export const PipeDream = require("./PipeDream").PipeDream;
 export const defaultStore = require("./defaultStore");
 export const Template = require("./utilities/Template").Template;
+export const PartialTemplate = require("./utilities/PartialTemplate").PartialTemplate;
 export const SketchButton = require("./utilities/SketchButton").SketchButton
 export const BaseFileFactory = require("./fileFactories/BaseFileFactory").BaseFileFactory
 export const ModelEntity = require("./objectModel/ObjectModelEntity").ObjectModelEntity

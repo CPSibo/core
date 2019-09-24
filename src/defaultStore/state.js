@@ -57,6 +57,13 @@ function defaultKeyValuePairs(options) {
                 ...fileFactory.templates()
             }
         }, {}),
+        // TODO: namepace and group the templates per factory
+        defaultTemplates: options.fileFactories.reduce((all, fileFactory) => {
+            return {
+                ...all,                
+                ...fileFactory.defaultTemplates()
+            }
+        }, {}),
         reverseHistory: true,
         preferences: options.fileFactories.reduce((all, fileFactory) => {
             return {

@@ -16,6 +16,11 @@ export class BaseFileFactory {
         return {}
     }
 
+    // TODO: Template type
+    static defaultTemplates(): { [key: string]: any } {
+        return {}
+    }
+
     static buttons(): Array<SketchButton> {
         return []
     }
@@ -45,15 +50,30 @@ export class BaseFileFactory {
 
     // TODO: Make this prettier
     calculateFiles(): Array<string> {
-        return collect(this.pipes.map(pipe => {
+        // Create files from whole-file templates.
+        let filesFromTemplates = this.pipes.map(pipe => {
             let files = pipe.with(this.omc).calculateFiles(this.omc)
+
             files.forEach(file => {
                 file.pipe = pipe.name
                 file.factory = this.constructor.name
             })
+
             return files
-        }).reduce((pipeFileList, allFiles) => {
+        })
+
+        // Get a flat list of our files.
+        filesFromTemplates = filesFromTemplates.reduce((allFiles, pipeFileList) => {
             return allFiles.concat(pipeFileList)
-        }, [])).sortBy('path').toArray();
+        }, [])
+
+        // Run each pipe's partial templates against
+        // our extant files, creating new files if needed.
+        this.pipes.forEach((pipe, index) =>{
+            pipe.with(this.omc).calculatePartialFiles(this.omc)
+        })
+
+        // Sort and store the files in a gneric array.
+        return collect(filesFromTemplates).sortBy('path').toArray();
     }
 }
